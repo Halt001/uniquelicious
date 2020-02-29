@@ -16,3 +16,7 @@ export interface CheckBoxInfo {
   id: number;
   isChecked?: boolean;
 }
+
+export interface CheckBoxInfoEntities {
+  [index: string]: CheckBoxInfo;
+}

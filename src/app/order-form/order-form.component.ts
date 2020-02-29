@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CheckBoxInfo, Category } from './order-form.interfaces';
 
 
@@ -6,11 +6,12 @@ import { CheckBoxInfo, Category } from './order-form.interfaces';
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.component.html',
-  styleUrls: ['./order-form.component.scss']
+  styleUrls: ['./order-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderFormComponent implements OnInit {
 
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     this.checkBoxes = this.createCheckBoxes();
   }
 
@@ -19,6 +20,26 @@ export class OrderFormComponent implements OnInit {
   ngOnInit(): void {
     //
   }
+
+  clickedCheckbox(checkbox: CheckBoxInfo) {
+
+    if (checkbox.category === Category.BASIS_KIND) {
+      this.selectNewKind(checkbox);
+    } else {
+      checkbox.isChecked = !checkbox.isChecked;
+    }
+  }
+
+  private selectNewKind({ id, isChecked }: CheckBoxInfo) {
+    if (!isChecked) {
+      return;
+    }
+
+    const bowlBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
+    const burritoBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
+    const SaladBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
+  }
+
   private createCheckBoxes(): CheckBoxInfo[] {
     const checkBoxes: CheckBoxInfo[] = [];
     const yDelta = 13.55;

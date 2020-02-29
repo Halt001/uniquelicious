@@ -4,6 +4,7 @@
     [style.top.px]="checkBox.top"
     [style.left.px]="checkBox.left"
     [class.-is-checked]="!checkBox.isChecked"
+    (click)="clickedCheckbox(checkBox)"
   >
   </div>
 </div>
