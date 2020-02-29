@@ -9,6 +9,17 @@ export enum Category {
   SIDE_DISHES,
 }
 
+export enum BasisKind {
+  BOWL = 0,
+  BURRITO = 1,
+  SALAD = 2,
+}
+
+export enum BasisProteinCount {
+  ONE = 0,
+  TWO = 1,
+}
+
 export interface CheckBoxInfo {
   id: string;
   category: Category;

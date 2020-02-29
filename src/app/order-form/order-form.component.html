@@ -3,8 +3,8 @@
     class="c-order-form__box"
     [style.top.px]="item.value.top"
     [style.left.px]="item.value.left"
-    [class.-is-checked]="!item.value.isChecked"
-    (click)="clickedCheckbox(item.key)"
+    [class.-is-checked]="item.value.isChecked"
+    (click)="clickedCheckbox(item.value)"
   >
   </div>
 </div>
