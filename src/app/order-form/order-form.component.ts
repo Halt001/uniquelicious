@@ -21,12 +21,12 @@ export class OrderFormComponent implements OnInit {
   }
   private createCheckBoxes(): CheckBoxInfo[] {
     const checkBoxes: CheckBoxInfo[] = [];
-    const yDelta = 27.1;
-    const left1 = 22;
-    const left2 = 287;
+    const yDelta = 13.55;
+    const left1 = 10;
+    const left2 = 142;
 
     // 1) Basis
-    let topOffset = 232;
+    let topOffset = 116;
     let category = Category.BASIS_KIND;
     for (let i = 0; i < 3; ++i) {
       checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
@@ -38,7 +38,7 @@ export class OrderFormComponent implements OnInit {
 
 
     // 3) Proteïnen
-    topOffset = 386;
+    topOffset = 193;
     category = Category.PROTEINE;
     for (let i = 0; i < 4; ++i) {
       checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
@@ -48,7 +48,7 @@ export class OrderFormComponent implements OnInit {
     }
 
     // 3) Mixin
-    topOffset = 568;
+    topOffset = 284;
     category = Category.MIXIN;
     for (let i = 0; i < 9; ++i) {
       checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
@@ -58,7 +58,7 @@ export class OrderFormComponent implements OnInit {
     }
 
     // 4) Dressing
-    topOffset = 923;
+    topOffset = 461;
     category = Category.DRESSING;
     for (let i = 0; i < 3; ++i) {
       checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
@@ -68,7 +68,7 @@ export class OrderFormComponent implements OnInit {
     }
 
     // 5) Toppings
-    topOffset = 1117;
+    topOffset = 558;
     category = Category.TOPPINGS;
     for (let i = 0; i < 5; ++i) {
       checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
@@ -79,8 +79,8 @@ export class OrderFormComponent implements OnInit {
 
 
     // 6) Toppings
-    topOffset = 1362;
-    category = Category.TOPPINGS;
+    topOffset = 681;
+    category = Category.SIDE_DISHES;
     for (let i = 0; i < 7; ++i) {
       checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
     }

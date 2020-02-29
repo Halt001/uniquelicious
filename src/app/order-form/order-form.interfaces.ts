@@ -14,4 +14,5 @@ export interface CheckBoxInfo {
   left: number;
   category: Category;
   id: number;
+  isChecked?: boolean;
 }
