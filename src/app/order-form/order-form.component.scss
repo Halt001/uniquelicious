@@ -1,0 +1,19 @@
+.c-order-form {
+  $box-width: 22px;
+  $box-height: $box-width;
+
+  position: relative;
+  width: 610px;
+  height: 1747px;
+  background-color: green;
+  background-image: url("../../assets/orderform-background.png");
+  color: purple;
+
+  &__box {
+    position: absolute;
+    width: $box-width;
+    height: $box-height;
+    border: 1px solid red;
+    background-color: orange;
+  }
+}
