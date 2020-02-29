@@ -1,10 +1,10 @@
 <div class="c-order-form">
-  <div *ngFor="let checkBox of checkBoxes"
+  <div *ngFor="let item of checkBoxEntities | keyvalue"
     class="c-order-form__box"
-    [style.top.px]="checkBox.top"
-    [style.left.px]="checkBox.left"
-    [class.-is-checked]="!checkBox.isChecked"
-    (click)="clickedCheckbox(checkBox)"
+    [style.top.px]="item.value.top"
+    [style.left.px]="item.value.left"
+    [class.-is-checked]="!item.value.isChecked"
+    (click)="clickedCheckbox(item.key)"
   >
   </div>
 </div>

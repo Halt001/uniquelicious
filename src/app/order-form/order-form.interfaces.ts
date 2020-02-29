@@ -10,10 +10,10 @@ export enum Category {
 }
 
 export interface CheckBoxInfo {
+  id: string;
+  category: Category;
   top: number;
   left: number;
-  category: Category;
-  id: number;
   isChecked?: boolean;
 }
 

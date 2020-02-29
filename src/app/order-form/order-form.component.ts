@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { CheckBoxInfo, Category } from './order-form.interfaces';
+import { CheckBoxInfo, Category, CheckBoxInfoEntities } from './order-form.interfaces';
 
 
 
@@ -12,10 +12,11 @@ import { CheckBoxInfo, Category } from './order-form.interfaces';
 export class OrderFormComponent implements OnInit {
 
   constructor(private cd: ChangeDetectorRef) {
-    this.checkBoxes = this.createCheckBoxes();
+    this.checkBoxEntities = this.createCheckBoxEntities();
   }
 
   checkBoxes: CheckBoxInfo[];
+  checkBoxEntities: CheckBoxInfoEntities;
 
   ngOnInit(): void {
     //
@@ -35,13 +36,13 @@ export class OrderFormComponent implements OnInit {
       return;
     }
 
-    const bowlBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
-    const burritoBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
-    const SaladBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
+    // const bowlBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
+    // const burritoBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
+    // const SaladBox = this.checkBoxes.find(item => item.id === 0 && item.category === Category.BASIS_KIND);
   }
 
-  private createCheckBoxes(): CheckBoxInfo[] {
-    const checkBoxes: CheckBoxInfo[] = [];
+  createCheckBoxEntities(): CheckBoxInfoEntities {
+    const checkBoxEntities: CheckBoxInfoEntities = {};
     const yDelta = 13.55;
     const left1 = 10;
     const left2 = 142;
@@ -50,65 +51,84 @@ export class OrderFormComponent implements OnInit {
     let topOffset = 116;
     let category = Category.BASIS_KIND;
     for (let i = 0; i < 3; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
+      const id = `${category}:${i}`;
+      checkBoxEntities[this.makeId(category, i)] = { top: topOffset + i * yDelta, left: left1, category, id };
     }
     category = Category.BASIS_PROTEINE_COUNT;
     for (let i = 0; i < 2; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left2, category, id: i });
+      const id = `${category}:${i}`;
+      checkBoxEntities[this.makeId(category, i)] = { top: topOffset + i * yDelta, left: left2, category, id };
     }
-
 
     // 3) Proteïnen
     topOffset = 193;
     category = Category.PROTEINE;
     for (let i = 0; i < 4; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
+      const id = `${category}:${i}`;
+      checkBoxEntities[this.makeId(category, i)] = { top: topOffset + i * yDelta, left: left1, category, id };
     }
     for (let i = 0; i < 4; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left2, category, id: i + 4 });
+      const idNumber = i + 4;
+      const id = `${category}:${idNumber}`;
+      checkBoxEntities[this.makeId(category, idNumber)] = { top: topOffset + i * yDelta, left: left2, category, id };
     }
 
     // 3) Mixin
     topOffset = 284;
     category = Category.MIXIN;
     for (let i = 0; i < 9; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
+      const id = `${category}:${i}`;
+      checkBoxEntities[this.makeId(category, i)] = { top: topOffset + i * yDelta, left: left1, category, id };
     }
     for (let i = 0; i < 8; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left2, category, id: i + 9 });
+      const idNumber = i + 9;
+      const id = `${category}:${idNumber}`;
+      checkBoxEntities[this.makeId(category, idNumber)] = { top: topOffset + i * yDelta, left: left2, category, id };
     }
 
     // 4) Dressing
     topOffset = 461;
     category = Category.DRESSING;
     for (let i = 0; i < 3; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
+      const id = `${category}:${i}`;
+      checkBoxEntities[this.makeId(category, i)] = { top: topOffset + i * yDelta, left: left1, category, id };
     }
     for (let i = 0; i < 3; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left2, category, id: i + 3 });
+      const idNumber = i + 3;
+      const id = `${category}:${idNumber}`;
+      checkBoxEntities[this.makeId(category, idNumber)] = { top: topOffset + i * yDelta, left: left2, category, id };
     }
 
     // 5) Toppings
     topOffset = 558;
     category = Category.TOPPINGS;
     for (let i = 0; i < 5; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
+      const id = `${category}:${i}`;
+      checkBoxEntities[this.makeId(category, i)] = { top: topOffset + i * yDelta, left: left1, category, id };
     }
     for (let i = 0; i < 4; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left2, category, id: i + 5 });
+      const idNumber = i + 5;
+      const id = `${category}:${idNumber}`;
+      checkBoxEntities[this.makeId(category, idNumber)] = { top: topOffset + i * yDelta, left: left2, category, id };
     }
-
 
     // 6) Toppings
     topOffset = 681;
     category = Category.SIDE_DISHES;
     for (let i = 0; i < 7; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left1, category, id: i });
+      const id = `${category}:${i}`;
+      checkBoxEntities[this.makeId(category, i)] = { top: topOffset + i * yDelta, left: left1, category, id };
     }
     for (let i = 0; i < 6; ++i) {
-      checkBoxes.push({ top: topOffset + i * yDelta, left: left2, category, id: i + 7 });
+      const idNumber = i + 7;
+      const id = `${category}:${idNumber}`;
+      checkBoxEntities[this.makeId(category, idNumber)] = { top: topOffset + i * yDelta, left: left2, category, id };
     }
 
-    return checkBoxes;
+    return checkBoxEntities;
+  }
+
+  makeId(category: Category, index: number): string {
+    return `${category}:${index}`;
   }
 }
