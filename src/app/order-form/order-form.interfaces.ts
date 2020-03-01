@@ -31,3 +31,10 @@ export interface CheckBoxInfo {
 export interface CheckBoxInfoEntities {
   [index: string]: CheckBoxInfo;
 }
+
+export interface ChoiceCount {
+  left: number;
+  right: number;
+  freeSelections: number;
+}
+

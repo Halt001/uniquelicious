@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { CheckBoxInfo, Category, CheckBoxInfoEntities, BasisKind, BasisProteinCount } from './order-form.interfaces';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { CheckBoxInfo, Category, CheckBoxInfoEntities, BasisKind, BasisProteinCount, ChoiceCount } from './order-form.interfaces';
 
 
 
@@ -9,18 +9,18 @@ import { CheckBoxInfo, Category, CheckBoxInfoEntities, BasisKind, BasisProteinCo
   styleUrls: ['./order-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderFormComponent implements OnInit {
+export class OrderFormComponent {
   checkBoxEntities: CheckBoxInfoEntities;
   selectedKind: BasisKind;
   selectedProteinCount: BasisProteinCount;
 
+  private readonly proteinChoiceCount: ChoiceCount = { left: 4, right: 4, freeSelections: 1 };
+  private readonly mixinChoiceCount: ChoiceCount = { left: 9, right: 8, freeSelections: 4 };
+  private readonly dressingChoiceCount: ChoiceCount = { left: 3, right: 3, freeSelections: 2 };
+  private readonly toppingsChoiceCount: ChoiceCount = { left: 5, right: 4, freeSelections: 3 };
+
   constructor(private cd: ChangeDetectorRef) {
     this.checkBoxEntities = this.createCheckBoxEntities();
-  }
-
-
-  ngOnInit(): void {
-    //
   }
 
   clickedCheckbox(checkbox: CheckBoxInfo) {
@@ -39,6 +39,7 @@ export class OrderFormComponent implements OnInit {
     }
 
     this.updateRestrictions();
+    this.randomize();
   }
 
   updateRestrictions() {
@@ -46,7 +47,7 @@ export class OrderFormComponent implements OnInit {
     this.selectedProteinCount = this.getSelectedProteinCount();
   }
 
-  getSelectedKind(): BasisKind {
+  private getSelectedKind(): BasisKind {
     if (this.checkBoxEntities[this.makeId(Category.BASIS_KIND, BasisKind.BOWL)].isChecked) {
       return BasisKind.BOWL;
     }
@@ -60,7 +61,7 @@ export class OrderFormComponent implements OnInit {
     return undefined;
   }
 
-  getSelectedProteinCount(): BasisProteinCount {
+  private getSelectedProteinCount(): BasisProteinCount {
     if (this.checkBoxEntities[this.makeId(Category.BASIS_PROTEINE_COUNT, BasisProteinCount.ONE)].isChecked) {
       return BasisProteinCount.ONE;
     }
@@ -69,6 +70,54 @@ export class OrderFormComponent implements OnInit {
     }
 
     return undefined;
+  }
+
+  private randomize() {
+    if (this.selectedKind === undefined || this.selectedProteinCount === undefined) {
+      return;
+    }
+
+    this.randomizeProtein();
+    this.randomizeMixins();
+    this.randomizeDressing();
+    this.randomizeTopping();
+  }
+
+  private randomizeProtein() {
+    const freeSelections = this.selectedProteinCount === BasisProteinCount.ONE
+      ? 1
+      : 2;
+
+    this.randomizeCategory(Category.PROTEINE, { ...this.proteinChoiceCount, freeSelections });
+  }
+
+  private randomizeMixins() {
+    this.randomizeCategory(Category.MIXIN, this.mixinChoiceCount);
+  }
+
+  private randomizeDressing() {
+    this.randomizeCategory(Category.DRESSING, this.dressingChoiceCount);
+  }
+
+  private randomizeTopping() {
+    this.randomizeCategory(Category.TOPPINGS, this.toppingsChoiceCount);
+  }
+
+  private randomizeCategory(category: Category, choiceCount: ChoiceCount) {
+    const { left, right, freeSelections } = choiceCount;
+    const totalChoiceCount = left + right;
+
+    for (let i = 0; i < totalChoiceCount; ++i) {
+      this.checkBoxEntities[this.makeId(category, i)].isChecked = false;
+    }
+
+    const selections = new Set<number>();
+
+    while(selections.size < freeSelections) {
+      selections.add(this.getRandomInt(totalChoiceCount));
+    }
+
+    selections.forEach((i) => this.checkBoxEntities[this.makeId(category, i)].isChecked = true);
   }
 
   private selectKind({ id, isChecked }: CheckBoxInfo) {
@@ -94,7 +143,7 @@ export class OrderFormComponent implements OnInit {
     this.checkBoxEntities[id].isChecked = true;
   }
 
-  createCheckBoxEntities(): CheckBoxInfoEntities {
+  private createCheckBoxEntities(): CheckBoxInfoEntities {
     const checkBoxEntities: CheckBoxInfoEntities = {};
     const yDelta = 13.55;
     const left1 = 10;
@@ -181,7 +230,11 @@ export class OrderFormComponent implements OnInit {
     return checkBoxEntities;
   }
 
-  makeId(category: Category, index: number): string {
+  private makeId(category: Category, index: number): string {
     return `${category}:${index}`;
+  }
+
+  private getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
   }
 }
